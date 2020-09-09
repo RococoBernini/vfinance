@@ -1,0 +1,26 @@
+
+
+
+{% if watchlist %}
+<div class='row'>
+    <div class="card mb-6">
+        <div class="card-header">Watchlist</div>
+        <ul class="list-group list-group-flush">
+            {% for n in range(watchlist|length) %}
+                <li class="list-group-item  list-group-item-action d-flex justify-content-between align-items-center">
+                    <a href="{{ url_for('admin.show_quote', symbol = watchlist[n].symbol)}}">
+                        {{ watchlist[n].symbol}}
+                    </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a>
+                        {{ priceInWatchlist[n] }}
+                    </a>
+                    
+                </li>
+                
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endif %}

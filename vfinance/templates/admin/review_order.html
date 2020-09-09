@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div >
+        <div>
+            <h1>{{ symbol }}: {{ price }}</h1>
+        </div>
+        
+       <div>
+           <h3><strong>{{ action }} {{ quantity }}</strong>
+            {% if request.args.get('quantity') == '1' %}
+            share
+                           
+            {% else %}
+            shares 
+            {% endif %}
+            <strong>{{ symbol }}</strong>
+            </h3>   
+           
+           
+           
+           <h3>Estimated trade amount: {{ totalprice }}</h3>
+           <h3>Commission: $0.00</h3>
+           
+           <h3>cash: {{ cash }}</h3>
+           <h3>Buying power after trade: {{cash_balance}}</h3>
+           <form class="inline" method="post"
+                 action="{{ url_for('admin.place_order', symbol = symbol, price = price, totalprice = totalprice, name = name, action = action, quantity = quantity, able_to_trade = able_to_trade,next=request.full_path) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+            </form>
+
+       </div>
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% from 'bootstrap/pagination.html' import render_pagination %}
+
+{% block title %}
+    Home
+{% endblock title %}
+{% block content %}
+
+{% if current_user.is_authenticated %}
+    
+    <div class="page-header">
+        <h1>Welcome: {{ current_user.username }}</h1>
+        <h3>Account Value: {{ account_value }}</h3>
+        <h3>Buying power: {{ cash }}</h3>
+        <h3>Position: {{ position }}</h3>
+        
+    </div>    
+    <div class='row'>
+        <div class='col-sm-10'>
+            {% if portfolio %}
+            <h3>
+                Portfolio<small class='text-muted'>{{ pagination.total }}</small>
+            </h3>
+            
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Qty</th>
+                    <th>Pruch</th>
+                    <th>Mkt Price</th>
+                    
+                </tr>
+                </thead>
+                {% for n in range(pagination.total) %}
+                
+                <tr>
+                    <td><a href="{{ url_for('admin.show_quote', symbol = portfolio[n].symbol)}}">{{ portfolio[n].symbol}}</a></td>
+                    <td>{{ portfolio[n].quantity}}</td>
+                    <td>{{ portfolio[n].purchase_price}}</td>
+                    <td>{{lookup(portfolio[n].symbol)['price']}}</td>
+                </tr>
+                    
+                {% endfor %}
+            </table>
+            {% endif %}
+            <div class="page-footer">{{ render_pagination(pagination) }}</div>
+        </div>
+        <div class='col-sm-2 sidebar'>
+            {% include "home/_sidebar.html" %}
+        </div>
+
+
+    </div>
+
+
+{% endif %}
+
+    
+
+    
+
+    
+{% endblock content %}

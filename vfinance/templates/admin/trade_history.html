@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/form.html' import render_form %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Trade History
+        <small class="text-muted">{{ pagination.total }}</small>
+        
+    </h1>
+</div>
+{% if trade_history %}
+<table class= 'table table-striped'>
+    <thead>
+        <tr>
+            <th>TimeStamp</th>
+            <th>Transaction</th>
+            <th>Change</th>
+        </tr>
+    </thead>
+    {% for trade in trade_history %}
+        <tr>
+            <td>{{trade.timestamp}}</td>
+            <td>{{ trade.symbol }} {{ trade.action }} {{ trade.quantity }} @ {{ trade.price }}</td>
+            <td>{% if trade.action =="Buy" %}
+                {{ (trade.quantity)*(trade.price)*(-1)}}
+            {% else %}
+            {{ (trade.quantity)*(trade.price)}}
+
+            {% endif %}</td>
+        </tr>
+    {% endfor %}
+</table>
+    
+{% endif %}
+{% endblock %}
+
+{% block footer %}{% endblock %}

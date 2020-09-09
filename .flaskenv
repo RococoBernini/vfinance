@@ -1,0 +1,2 @@
+FLASK_APP=vfinance
+FLASK_ENV=development
